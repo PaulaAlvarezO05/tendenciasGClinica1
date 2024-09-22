@@ -1,31 +1,37 @@
 from django.db import models
-#from ..patients.models import Patient
+from ..patients.models import Patient
 from ..users.models import User
 from ..medicalRecords.models import MedicalRecord
-#from ..medicationInventory.models import MedicationInventory
+from ..medicationInventory.models import MedicationInventory
 
 class Prescription(models.Model):
-    """paciente = models.ForeignKey(
+    paciente = models.ForeignKey(
         Patient,
         verbose_name="Paciente",
-        on_delete=models.CASCADE
-    )"""
+        on_delete=models.CASCADE,
+        null=True, 
+        blank=True
+    )
     medico = models.ForeignKey(
         User,
         verbose_name="Médico",
         on_delete=models.CASCADE,
         limit_choices_to={'rol__nombre': 'Médico'},
+        null=True, 
+        blank=True
     )
     historia_clinica = models.ForeignKey(
         MedicalRecord,
         verbose_name="Historia Clínica",
         on_delete=models.CASCADE
     )
-    """medicamento = models.ForeignKey(
+    medicamento = models.ForeignKey(
         MedicationInventory,
         verbose_name="Medicamento",
-        on_delete=models.CASCADE
-    )"""
+        on_delete=models.CASCADE,
+        null=True, 
+        blank=True
+    )
     via_administracion = models.CharField(max_length=20, choices = [
         ('Oral', 'Oral'),
         ('Intramuscular', 'Intramuscular'),
