@@ -1,15 +1,15 @@
 from django.db import models
-from ..patients.models import Patient
+#from ..patients.models import Patient
 from ..users.models import User
 
 class Appointment(models.Model):
-  paciente = models.ForeignKey(
+  """paciente = models.ForeignKey(
      Patient, 
      verbose_name="Paciente", 
      on_delete=models.CASCADE,
      null=True, 
      blank=True
-  )
+  )"""
   medico = models.ForeignKey(
      User,
      verbose_name="Médico", 
@@ -21,4 +21,5 @@ class Appointment(models.Model):
   estado = models.CharField(max_length=20, default='Programada', editable=False)
 
   def __str__(self):
-    return f"{self.paciente.nombres} {self.paciente.apellidos} - {self.fecha_hora} ({self.estado})"
+    #return f"{self.paciente.nombres} {self.paciente.apellidos} - {self.fecha_hora} ({self.estado})"
+    return f"Médico: {self.medico.nombres} {self.medico.apellidos} Fecha: {self.fecha_hora}"

@@ -1,15 +1,15 @@
 from django.db import models
-from ..patients.models import Patient
+#from ..patients.models import Patient
 from ..users.models import User
 from ..medicalRecords.models import MedicalRecord
 #from ..medicationInventory.models import MedicationInventory
 
 class Prescription(models.Model):
-    paciente = models.ForeignKey(
+    """paciente = models.ForeignKey(
         Patient,
         verbose_name="Paciente",
         on_delete=models.CASCADE
-    )
+    )"""
     medico = models.ForeignKey(
         User,
         verbose_name="Médico",

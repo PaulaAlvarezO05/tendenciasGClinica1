@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'app.medicalRecords',
     #'app.medicalSpecialties',
     #'app.medicationInventory',
-    'app.patients',
+    #'app.patients',
     'app.prescriptions',
     'app.roles',
     'app.users',
