@@ -17,9 +17,8 @@ class Billing(models.Model):
         'Estado de Pago', 
         max_length=20, 
         choices=[
-            ('P', 'Pagado'),
-            ('N', 'No Pagado'),
-            ('C', 'Cancelado')
+            ('P','Pagado'),
+            ('PEN','Pendiente'),
         ],
         
     )
