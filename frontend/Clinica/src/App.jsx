@@ -1,9 +1,12 @@
-import 'bootstrap/dist/css/bootstrap.min.css' //Importación de Bootstrap
-
+import 'bootstrap/dist/css/bootstrap.min.css'
+import {AddAppointment} from './pages/AddAppointments'
+import {ListAppointments} from './pages/ListAppointments'
 function App() {
-  return (
-    <div>Principal</div>
-  )
+    return (
+        <div className="container">
+            <AddAppointment/>
+        </div>
+    );
 }
 
 export default App
