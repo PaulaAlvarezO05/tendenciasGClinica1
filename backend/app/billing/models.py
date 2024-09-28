@@ -12,7 +12,8 @@ class Billing(models.Model):
   )
     fecha=models.DateField('Fecha')
     monto = models.DecimalField('Monto', max_digits=15, decimal_places=2)  
-    detalles = models.TextField('Detalles', blank=True) 
+    detalles = models.TextField('Detalles', blank=True)
+    # --- Quitar 
     estado_pago = models.CharField(
         'Estado de Pago', 
         max_length=20, 

@@ -4,7 +4,7 @@ import {ListAppointments} from './pages/ListAppointments'
 function App() {
     return (
         <div className="container">
-            <AddAppointment/>
+            <ListAppointments/>
         </div>
     );
 }

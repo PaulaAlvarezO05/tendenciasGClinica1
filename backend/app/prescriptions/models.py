@@ -32,6 +32,7 @@ class Prescription(models.Model):
         null=True, 
         blank=True
     )
+    # Cambiar choices al front
     via_administracion = models.CharField(max_length=20, choices = [
         ('Oral', 'Oral'),
         ('Intramuscular', 'Intramuscular'),

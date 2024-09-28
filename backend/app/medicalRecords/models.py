@@ -20,7 +20,7 @@ class MedicalRecord(models.Model):
     )
     fecha_registro = models.DateTimeField("Fecha de Registro")
     descripcion_diagnostico = models.TextField("Descripción del diagnóstico")
-    #descripcion_tratamiento = models.TextField("Descripción del tratamiento")
+    #incluir llave foranea descripcion_tratamiento = models.TextField("Descripción del tratamiento")
 
     def __str__(self):
         return f"Historia clínica de {self.paciente.nombres}"

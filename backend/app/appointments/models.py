@@ -19,7 +19,7 @@ class Appointment(models.Model):
      blank=True
   ) 
   fecha_hora = models.DateTimeField("Fecha y hora")
-  motivo_consulta = models.TextField("Motivo de la consulta")
+  motivo_consulta = models.TextField("Motivo de la consulta") #Tipo consulta
   estado = models.CharField(max_length=20, default='Programada', editable=False)
 
   def __str__(self):
