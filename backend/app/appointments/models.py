@@ -1,6 +1,7 @@
 from django.db import models
 from ..patients.models import Patient
 from ..users.models import User
+from ..consultationType.models import ConsultationType
 
 class Appointment(models.Model):
   paciente = models.ForeignKey(
@@ -19,9 +20,13 @@ class Appointment(models.Model):
      blank=True
   ) 
   fecha_hora = models.DateTimeField("Fecha y hora")
-  motivo_consulta = models.TextField("Motivo de la consulta") #Tipo consulta
-  estado = models.CharField(max_length=20, default='Programada', editable=False)
+  tipo_consulta = models.ForeignKey(
+     ConsultationType,
+     verbose_name="Tipo de consulta", 
+     on_delete=models.SET_NULL,
+     null=True
+  )
+  estado = models.CharField(max_length=20, default='Programada')
 
   def __str__(self):
-    #return f"{self.paciente.nombres} {self.paciente.apellidos} - {self.fecha_hora} ({self.estado})"
     return f"Médico: {self.medico.nombres} {self.medico.apellidos} Fecha: {self.fecha_hora}"

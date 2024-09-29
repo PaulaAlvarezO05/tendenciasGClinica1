@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     'app.appointments',
     'app.billing',
+    'app.consultationType',
     'app.medicalRecords',
     'app.medicalSpecialties',
     'app.medicationInventory',
