@@ -2,7 +2,7 @@ from django.db import models
 from ..medicalSpecialties.models import MedicalSpecialty
 
 class ConsultationType(models.Model):
-    name = models.CharField("Tipo de consulta", max_length=100)
+    nombre = models.CharField("Tipo de consulta", max_length=100)
     especialidad = models.ForeignKey(
         MedicalSpecialty, 
         verbose_name="Especialidad",

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getAppointments, getPatients, getMedicos } from '../api/Clinica.api';
+import { getAppointments, getPatients, getMedicos, getConsultationType } from '../api/Clinica.api';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 
@@ -7,6 +7,7 @@ export function ListAppointments() {
     const [appointments, setAppointments] = useState([]);
     const [patients, setPatients] = useState([]);
     const [medicos, setMedicos] = useState([]);
+    const [consultation, setConsultation] = useState([])
 
     useEffect(() => {
         async function loadAppointments() {
@@ -24,21 +25,32 @@ export function ListAppointments() {
             setMedicos(res.data);
         }
 
+        async function loadConsultation() {
+            const res = await getConsultationType();
+            console.log(res)
+            setConsultation(res.data);
+        }
+
         async function loadData() {
-            await Promise.all([loadAppointments(), loadPatients(), loadMedicos()]);
+            await Promise.all([loadAppointments(), loadPatients(), loadMedicos(), loadConsultation()]);
         }
         loadData();
     }, []);
 
     // Funciones para obtener nombres de paciente y médico
-    const getPatientName = (id) => {
+    const getPatient = (id) => {
         const patient = patients.find(p => p.id === id);
         return patient ? patient.nombre_completo : 'Desconocido';
     };
 
-    const getMedicoName = (id) => {
+    const getMedico = (id) => {
         const medico = medicos.find(d => d.id === id);
         return medico ? `${medico.nombres} ${medico.apellidos}` : 'Desconocido';
+    };
+
+    const getConsultation = (id) => {
+        const consult = consultation.find(c => c.id === id);
+        return consult ? consult.nombre : 'Desconocido';
     };
 
     /*// Función para exportar la tabla como PDF
@@ -88,10 +100,10 @@ export function ListAppointments() {
                     <tbody>
                         {appointments.map(appointment => (
                             <tr key={appointment.id}>
-                                <td>{getPatientName(appointment.paciente)}</td>
-                                <td>{getMedicoName(appointment.medico)}</td>
+                                <td>{getPatient(appointment.paciente)}</td>
+                                <td>{getMedico(appointment.medico)}</td>
                                 <td>{new Date(appointment.fecha_hora).toLocaleString()}</td>
-                                <td>{appointment.motivo_consulta}</td>
+                                <td>{getConsultation(appointment.tipo_consulta)}</td>
                                 <td>{appointment.estado}</td>
                             </tr>
                         ))}

@@ -15,3 +15,7 @@ export const getPatients = () => {
 export const getMedicos = () => {
     return clinicaApi.get('/users/')
 }
+
+export const getConsultationType = () => {
+    return clinicaApi.get('/consultationType/')
+}

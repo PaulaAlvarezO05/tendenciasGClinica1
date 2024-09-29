@@ -1,6 +1,7 @@
 from rest_framework.routers import DefaultRouter
 from ..appointments.views import *
 from ..billing.views import *
+from ..consultationType.views import *
 from ..medicalRecords.views import *
 from ..medicalSpecialties.views import *
 from ..medicationInventory.views import *
@@ -13,6 +14,7 @@ router = DefaultRouter()
 
 router.register(r'appointments', AppointmentViewset, basename='appointments')
 router.register(r'billing', BillingViewset, basename='billing')
+router.register(r'consultationType', ConsultationTypeViewset, basename='consultationType')
 router.register(r'medicalRecords', MedicalRecordViewset, basename='medicalRecords')
 router.register(r'medicalSpecialties', MedicalSpecialtyViewset, basename='medicalSpecialties')
 router.register(r'medicationInventory', MedicationInViewset, basename='medicationInventory')
