@@ -13,16 +13,8 @@ class Billing(models.Model):
     fecha=models.DateField('Fecha')
     monto = models.DecimalField('Monto', max_digits=15, decimal_places=2)  
     detalles = models.TextField('Detalles', blank=True)
-    # --- Quitar 
-    estado_pago = models.CharField(
-        'Estado de Pago', 
-        max_length=20, 
-        choices=[
-            ('P','Pagado'),
-            ('PEN','Pendiente'),
-        ],
-        
-    )
+    estado_pago = models.CharField(max_length=20, default='Pendiente')
+  
 
     def __str__(self):
         return f"{self.paciente.nombres} {self.paciente.apellidos} - {self.fecha} - {self.estado_pago}"
