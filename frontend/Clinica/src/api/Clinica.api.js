@@ -19,3 +19,12 @@ export const getMedicos = () => {
 export const getConsultationType = () => {
     return clinicaApi.get('/consultationType/')
 }
+export const addPatient = async (patientData) => {
+    try {
+        const response = await clinicaApi.post('/patients/', patientData);
+        return response.data; // Retorna la respuesta de la API, puede ser útil para manejar la respuesta
+    } catch (error) {
+        console.error('Error al agregar el paciente:', error);
+        throw error; // Lanza el error para que se pueda manejar en el componente
+    }
+};
