@@ -19,6 +19,11 @@ export const getMedicos = () => {
 export const getConsultationType = () => {
     return clinicaApi.get('/consultationType/')
 }
+
+export const getRol = () => {
+    return clinicaApi.get('/roles/')
+} 
+
 export const addPatient = async (patientData) => {
     try {
         const response = await clinicaApi.post('/patients/', patientData);
@@ -26,5 +31,15 @@ export const addPatient = async (patientData) => {
     } catch (error) {
         console.error('Error al agregar el paciente:', error);
         throw error; // Lanza el error para que se pueda manejar en el componente
+    }
+};
+
+export const addAppointment = async (appointmentData) => {
+    try {
+        const response = await clinicaApi.post('/appointments/', appointmentData);
+        return response.data;
+    } catch (error) {
+        console.error('Error al agendar la cita:', error);
+        throw error;
     }
 };
