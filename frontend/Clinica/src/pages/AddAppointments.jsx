@@ -109,7 +109,7 @@ export function AddAppointment() {
                             onChange={(e) => setPatient(e.target.value)}
                             required
                         >
-                            <option selected disabled value="">Seleccione</option>
+                            <option disabled value="">Seleccione</option>
                             {listPatient.map((p) => (
                                 <option key={p.id} value={p.id}>
                                     {p.nombre_completo}
@@ -127,7 +127,7 @@ export function AddAppointment() {
                             onChange={(e) => setConsultation(e.target.value)}
                             required
                         >
-                            <option selected disabled value="">Seleccione</option>
+                            <option disabled value="">Seleccione</option>
                             {listConsultation.map((c) => (
                                 <option key={c.id} value={c.id}>
                                     {c.nombre}
@@ -146,7 +146,7 @@ export function AddAppointment() {
                             required
                             disabled={!consultation}
                         >
-                            <option selected disabled value="">Seleccione</option>
+                            <option disabled value="">Seleccione</option>
                             {listMedico.map((m) => (
                                 <option key={m.id} value={m.id}>
                                     {`${m.nombres} ${m.apellidos}`}
