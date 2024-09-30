@@ -85,9 +85,9 @@ export function ListAppointments() {
     return (
         <div className="container mt-4">
             <h2 className="text-center mb-4">Historial de Citas Médicas</h2>
-            <div className="table-responsive" id="appointments-table">
+            <div className="table-responsive shadow-sm p-3 mb-5 bg-white rounded" id="appointments-table">
                 <table className="table table-striped table-bordered table-hover">
-                    <thead className="thead-light">
+                    <thead className="thead-dark">
                         <tr>
                             <th>Paciente</th>
                             <th>Médico</th>
@@ -114,8 +114,8 @@ export function ListAppointments() {
                 </table>
             </div>
             <div className="text-end mb-3">
-                <button className="btn btn-primary" onClick={exportToPDF}>
-                    Exportar
+                <button className="btn btn-primary btn-lg" onClick={exportToPDF}>
+                    <i className="fas fa-file-export"></i> Exportar
                 </button>
             </div>
         </div>

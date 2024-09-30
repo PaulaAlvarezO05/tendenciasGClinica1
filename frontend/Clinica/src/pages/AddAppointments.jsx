@@ -97,19 +97,19 @@ export function AddAppointment() {
     return (
         <div className="container mt-5">
             <h2 className="text-center mb-4">Agendar Cita</h2>
-            <div className="bg-white p-4 rounded shadow">
-                {successMessage && <div className="alert alert-info">{successMessage}</div>}
+            <div className="bg-light p-4 rounded shadow">
+                {successMessage && <div className="alert alert-success text-center">{successMessage}</div>}
                 <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label htmlFor="patient">Paciente</label>
+                    <div className="form-group mb-3">
+                        <label htmlFor="patient" className="form-label">Paciente</label>
                         <select
-                            className="form-control"
+                            className="form-select"
                             id="patient"
                             value={patient}
                             onChange={(e) => setPatient(e.target.value)}
                             required
                         >
-                            <option value="">Seleccionar paciente</option>
+                            <option selected disabled value="">Seleccione</option>
                             {listPatient.map((p) => (
                                 <option key={p.id} value={p.id}>
                                     {p.nombre_completo}
@@ -118,16 +118,16 @@ export function AddAppointment() {
                         </select>
                     </div>
 
-                    <div className="form-group">
-                        <label htmlFor="consultation">Tipo de consulta</label>
+                    <div className="form-group mb-3">
+                        <label htmlFor="consultation" className="form-label">Tipo de consulta</label>
                         <select
-                            className="form-control"
+                            className="form-select"
                             id="consultation"
                             value={consultation}
                             onChange={(e) => setConsultation(e.target.value)}
                             required
                         >
-                            <option value="">Seleccione el tipo de consulta</option>
+                            <option selected disabled value="">Seleccione</option>
                             {listConsultation.map((c) => (
                                 <option key={c.id} value={c.id}>
                                     {c.nombre}
@@ -136,17 +136,17 @@ export function AddAppointment() {
                         </select>
                     </div>
 
-                    <div className="form-group">
-                        <label htmlFor="medico">Médico</label>
+                    <div className="form-group mb-3">
+                        <label htmlFor="medico" className="form-label">Médico</label>
                         <select
-                            className="form-control"
+                            className="form-select"
                             id="medico"
                             value={medico}
                             onChange={(e) => setMedico(e.target.value)}
                             required
-                            disabled={!consultation} // Deshabilitar si no se ha seleccionado una consulta
+                            disabled={!consultation}
                         >
-                            <option value="">Seleccionar médico</option>
+                            <option selected disabled value="">Seleccione</option>
                             {listMedico.map((m) => (
                                 <option key={m.id} value={m.id}>
                                     {`${m.nombres} ${m.apellidos}`}
@@ -155,8 +155,8 @@ export function AddAppointment() {
                         </select>
                     </div>
 
-                    <div className="form-group">
-                        <label htmlFor="fecha_hora">Fecha y hora</label>
+                    <div className="form-group mb-3">
+                        <label htmlFor="fecha_hora" className="form-label">Fecha y hora</label>
                         <input
                             type="datetime-local"
                             className="form-control"
@@ -166,10 +166,11 @@ export function AddAppointment() {
                             required
                         />
                     </div>
-
-                    <button type="submit" className="btn btn-primary btn-block">
-                        Aceptar
-                    </button>
+                    <div className="text-end mb-3">
+                        <button type="submit" className="btn btn-primary btn-lg">
+                            Agendar cita
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
