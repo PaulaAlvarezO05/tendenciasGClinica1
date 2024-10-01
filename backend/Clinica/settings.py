@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'django_filters',
-    'corsheaders', #middleware de CORS 
+    'corsheaders', 
+    'drf_yasg',
 
     'app.appointments',
     'app.billing',
