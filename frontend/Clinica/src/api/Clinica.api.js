@@ -38,6 +38,28 @@ export const addPatient = async (patientData) => {
     }
 };
 
+
+export const updatePatient = async (id, patientData) => {
+    try {
+        const response = await clinicaApi.put(`/patients/${id}/`, patientData);
+        return response.data;
+    } catch (error) {
+        console.error('Error al actualizar el paciente:', error.response?.data || error); // Muestra el error detallado
+        throw error;
+    }
+};
+
+
+export const deletePatient = async (id) => {
+    try {
+        const response = await clinicaApi.delete(`/patients/${id}/`);
+        return response.data; // Puede que no devuelva nada
+    } catch (error) {
+        console.error('Error al eliminar el paciente:', error);
+        throw error;
+    }
+};
+
 export const addAppointment = async (appointmentData) => {
     try {
         const response = await clinicaApi.post('/appointments/', appointmentData);
@@ -53,7 +75,7 @@ export const addUser = async (userData) => {
         const response = await clinicaApi.post('/users/', userData);
         return response.data;
     } catch (error) {
-        console.error('Error al agregar el usuario:', error.response ? error.response.data : error);
+        console.error('Error al agendar la cita:', error);
         throw error;
     }
 };
