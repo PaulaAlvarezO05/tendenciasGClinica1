@@ -12,6 +12,10 @@ export const getPatients = () => {
     return clinicaApi.get('/patients/')
 }
 
+export const getUsers = () => {  // Función para obtener usuarios
+    return clinicaApi.get('/users/')
+}
+
 export const getMedicos = () => {
     return clinicaApi.get('/users/')
 }
@@ -76,6 +80,26 @@ export const addUser = async (userData) => {
         return response.data;
     } catch (error) {
         console.error('Error al agendar la cita:', error);
+        throw error;
+    }
+};
+
+export const updateUser = async (id, userData) => {  // Función para actualizar usuarios
+    try {
+        const response = await clinicaApi.put(`/users/${id}/`, userData);
+        return response.data;
+    } catch (error) {
+        console.error('Error al actualizar el usuario:', error.response?.data || error);
+        throw error;
+    }
+};
+
+export const deleteUser = async (id) => {  // Función para eliminar usuarios
+    try {
+        const response = await clinicaApi.delete(`/users/${id}/`);
+        return response.data; 
+    } catch (error) {
+        console.error('Error al eliminar el usuario:', error);
         throw error;
     }
 };

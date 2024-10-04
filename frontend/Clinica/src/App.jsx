@@ -9,6 +9,10 @@ import { ManagePatients } from './pages/ManagePatients';
 import { ListPatients} from './pages/ListPatients';
 import { UpdatePatients } from './pages/UpdatePatients';
 import { ManageUsers } from './pages/ManageUsers';
+import { UpdateUsers } from './pages/updateUsers';
+import { ListUsers } from './pages/ListUsers';
+
+
 
 function App() {
     return (
@@ -18,7 +22,7 @@ function App() {
                     <Link to="/add-appointment" className="btn btn-primary me-2">Agregar Cita</Link>
                     <Link to="/list-appointments" className="btn btn-secondary me-2">Listar Citas</Link>
                     <Link to="/manage-patient" className="btn btn-success me-2">Pacientes</Link>
-                    <Link to="/manage-user" className="btn btn-success">Agregar Usuario</Link>
+                    <Link to="/manage-user" className="btn btn-success">Usuarios</Link>
                 </div>
                 <Routes>
                     <Route path="/add-appointment" element={<AddAppointment />} />
@@ -29,6 +33,10 @@ function App() {
                     <Route path="/add-user" element={<AddUser />} />
                     <Route path="/list-patient" element={<ListPatients />} />
                     <Route path="/update-patient" element={< UpdatePatients/>} />
+                    <Route path="/update-user" element={< UpdateUsers/>} />
+                    <Route path="/list-user" element={< ListUsers/>} />
+
+
                     
                 </Routes>
             </div>
