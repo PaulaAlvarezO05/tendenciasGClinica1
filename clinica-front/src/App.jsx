@@ -13,7 +13,8 @@ function App() {
     <Route path="/" element={<Navigate to="/patients" />} />
     <Route path="/patients" element={<PatientsPage/>} />
     <Route path="/patients-create" element={<PatientsFormPage/>} />
-   
+    <Route path="/patients/:id" element={<PatientsFormPage/>} />
+    
    </Routes>
    </BrowserRouter> 
   )
