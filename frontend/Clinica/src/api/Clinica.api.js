@@ -4,6 +4,7 @@ const clinicaApi = axios.create({
     baseURL: 'http://127.0.0.1:8000/api/'
 })
 
+// Métodos GET(Read)
 export const getAppointments = () => {
     return clinicaApi.get('/appointments/')
 }
@@ -12,7 +13,7 @@ export const getPatients = () => {
     return clinicaApi.get('/patients/')
 }
 
-export const getUsers = () => {  // Función para obtener usuarios
+export const getUsers = () => { 
     return clinicaApi.get('/users/')
 }
 
@@ -29,9 +30,10 @@ export const getRol = () => {
 } 
 
 export const getMedicalSpecialties = () => {
-    return clinicaApi.get('/medicalSpecialties/'); 
-};
+    return clinicaApi.get('/medicalSpecialties/')
+}
 
+// Métodos POST(Create)
 export const addPatient = async (patientData) => {
     try {
         const response = await clinicaApi.post('/patients/', patientData);
@@ -42,7 +44,6 @@ export const addPatient = async (patientData) => {
     }
 };
 
-
 export const updatePatient = async (id, patientData) => {
     try {
         const response = await clinicaApi.put(`/patients/${id}/`, patientData);
@@ -52,7 +53,6 @@ export const updatePatient = async (id, patientData) => {
         throw error;
     }
 };
-
 
 export const deletePatient = async (id) => {
     try {
@@ -103,3 +103,15 @@ export const deleteUser = async (id) => {  // Función para eliminar usuarios
         throw error;
     }
 };
+
+export const updateAppointment = async (id, updatedData) => {
+    console.log("updatedData", updatedData)
+    try {
+        const response = await clinicaApi.put(`/appointments/${id}/`, updatedData);
+        
+        return response.data;
+    } catch (error) {
+        console.error('Error al actualizar la cita:', error.response?.data || error);
+        throw error;
+    }
+}

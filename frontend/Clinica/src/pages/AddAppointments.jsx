@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 export function AddAppointment() {
     const [listPatient, setListPatient] = useState([]);
     const [listMedico, setListMedico] = useState([]);
-    const [listUsers, setListUsers] = useState([]); // Guardamos todos los médicos aquí
+    const [listUsers, setListUsers] = useState([]);
     const [listConsultation, setListConsultation] = useState([]);
     const [listRol, setListRol] = useState([]);
     const [patient, setPatient] = useState('');
@@ -23,8 +23,8 @@ export function AddAppointment() {
 
         async function loadMedicos() {
             const res = await getMedicos();
-            setListUsers(res.data); // Guardamos todos los médicos
-            setListMedico(res.data); // Inicialmente, mostramos todos los médicos
+            setListUsers(res.data); 
+            setListMedico(res.data); 
         }
 
         async function loadConsultation() {
