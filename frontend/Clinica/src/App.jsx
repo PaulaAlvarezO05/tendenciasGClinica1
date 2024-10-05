@@ -18,14 +18,15 @@ export default function App() {
     return (
         <Router>
             <div className="container">
-                <h1>Gestión Clínica</h1> {/* Moved inside the Router */}
+                <h1>Gestión Clínica</h1> 
                 <div className="mb-4">
                     <Link to="/manage-appointments" className="btn btn-primary me-2">Citas</Link>
                     <Link to="/manage-patient" className="btn btn-success me-2">Pacientes</Link>
-                    <Link to="/manage-user" className="btn btn-warning">Usuarios</Link> {/* Cambiado a color amarillo */}
+                    <Link to="/manage-user" className="btn btn-warning">Usuarios</Link> 
                 </div>
 
                 <Routes>
+                    
                     <Route path="/add-appointment" element={<AddAppointment />} />
                     <Route path="/list-appointments" element={<ListAppointments />} />
                     <Route path="/manage-patient" element={<ManagePatients />} />

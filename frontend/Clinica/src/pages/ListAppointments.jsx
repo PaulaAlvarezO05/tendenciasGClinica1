@@ -51,19 +51,19 @@ export function ListAppointments() {
         return consult ? consult.nombre : 'Desconocido';
     };
 
-    // Función para exportar la tabla como PDF
+    
     const exportToPDF = () => {
         const doc = new jsPDF();
 
-        // Agregar título
+       
         doc.setFontSize(20);
         doc.text('Listado de Citas Médicas', 14, 22);
 
-        // Agregar encabezados de la tabla
+        
         const tableColumn = ["Paciente", "Médico", "Fecha y Hora", "Tipo de Consulta", "Estado"];
         const tableRows = [];
 
-        // Preparar los datos de la tabla
+        
         appointments.forEach(appointment => {
             const appointmentData = [
                 getPatient(appointment.paciente),
@@ -75,10 +75,10 @@ export function ListAppointments() {
             tableRows.push(appointmentData);
         });
 
-        // Generar la tabla en el PDF
+        
         doc.autoTable(tableColumn, tableRows, { startY: 30 });
 
-        // Guardar el PDF
+        
         doc.save('Historial de Citas Médicas.pdf');
     };
 

@@ -9,12 +9,4 @@ class MedicationInViewset(viewsets.ModelViewSet):
     queryset = MedicationInventory.objects.all()
     serializer_class = MedicationInSerializer
     
-    filter_backends = [
-        DjangoFilterBackend,
-        filters.SearchFilter,
-        filters.OrderingFilter,
-    ]
-    
-    filterset_fields = ('__all__')
-    search_fields = ('__all__')
-    ordering_fields = ('__all__')
+ 

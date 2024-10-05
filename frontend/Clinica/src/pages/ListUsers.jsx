@@ -15,19 +15,19 @@ export function ListUsers() {
         loadUsers();
     }, []);
 
-    // Función para exportar la tabla como PDF en modo horizontal (landscape)
+   
     const exportToPDF = () => {
         const doc = new jsPDF();
 
-        // Agregar título
+    
         doc.setFontSize(18);
         doc.text('Listado de Usuarios', 14, 22);
 
-        // Definir el ancho de las columnas
+        
         const tableColumn = ["ID", "Nombre", "Apellidos", "Dirección", "Rol", "Email", "Teléfono", "Especialidad"];
         const tableRows = [];
 
-        // Preparar los datos de la tabla
+        
         users.forEach(user => {
             const userData = [
                 user.id,
@@ -42,7 +42,7 @@ export function ListUsers() {
             tableRows.push(userData);
         });
 
-        // Generar la tabla en el PDF
+        
         doc.autoTable({
             head: [tableColumn],
             body: tableRows,
@@ -64,7 +64,7 @@ export function ListUsers() {
             theme: 'striped'
         });
 
-        // Guardar el PDF
+       
         doc.save('Listado_de_Usuarios.pdf');
     };
 

@@ -14,14 +14,14 @@ export function AddPatient() {
     const [companiaSeguros, setCompaniaSeguros] = useState('');
     const [numeroPoliza, setNumeroPoliza] = useState('');
     const [vigenciaPoliza, setVigenciaPoliza] = useState('');
-    const [estadoPoliza, setEstadoPoliza] = useState('A'); // Default to 'Activa'
+    const [estadoPoliza, setEstadoPoliza] = useState('A'); 
     const [successMessage, setSuccessMessage] = useState('');
 
     const handleVigenciaChange = (e) => {
         const nuevaVigencia = e.target.value;
         setVigenciaPoliza(nuevaVigencia);
 
-        // Calcular el estado de la póliza
+        
         const estado = new Date(nuevaVigencia) > new Date() ? 'A' : 'I';
         setEstadoPoliza(estado);
     };
@@ -46,7 +46,7 @@ export function AddPatient() {
 
         try {
             await addPatient(newPatient);
-            // Limpiar los campos
+            
             setNombreCompleto('');
             setFechaNacimiento('');
             setGenero('');
@@ -58,7 +58,7 @@ export function AddPatient() {
             setCompaniaSeguros('');
             setNumeroPoliza('');
             setVigenciaPoliza('');
-            setEstadoPoliza('A'); // Reset to default 'Activa'
+            setEstadoPoliza('A'); 
             setSuccessMessage('Paciente registrado exitosamente!');
             setTimeout(() => setSuccessMessage(''), 3000);
         } catch (error) {
@@ -193,7 +193,7 @@ export function AddPatient() {
                         className="form-control"
                         id="vigenciaPoliza"
                         value={vigenciaPoliza}
-                        onChange={handleVigenciaChange} // Usar la nueva función
+                        onChange={handleVigenciaChange} 
                         required
                     />
                 </div>
@@ -203,8 +203,8 @@ export function AddPatient() {
                         type="text"
                         className="form-control"
                         id="estadoPoliza"
-                        value={estadoPoliza === 'A' ? 'Activa' : 'Inactiva'} // Mostrar texto legible
-                        readOnly // Campo de solo lectura
+                        value={estadoPoliza === 'A' ? 'Activa' : 'Inactiva'} 
+                        readOnly 
                     />
                 </div>
                 <button type="submit" className="btn btn-primary">Agregar Paciente</button>

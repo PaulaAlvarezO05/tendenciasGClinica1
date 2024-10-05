@@ -10,6 +10,6 @@ class UserViewset(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     
     def get_serializer_class(self):
-        if self.action in ['update', 'partial_update']:  # Permite actualizaciones parciales
-            return UserUpdateSerializer # Usa el serializer de actualización
+        if self.action in ['update', 'partial_update']:  
+            return UserUpdateSerializer 
         return super().get_serializer_class()

@@ -2,34 +2,32 @@
 
 ## Descripción
 Este proyecto consiste en el desarrollo de una aplicación web para la gestión de información en una clínica. 
-Utiliza Django Rest Framework en el backend, MySQL como base de datos, y un framework moderno como React.js en el frontend. 
+Utiliza Django Rest Framework en el backend, SQLite como base de datos, y un framework moderno como React.js y Bootstrap en el frontend. 
 La aplicación está diseñada para manejar de manera eficiente los datos de pacientes y personal, optimizando los procesos clínicos y asegurando la seguridad de la información.
 
-## Objetivos
-- **Automatización de la Gestión de Datos**: Facilitar la administración de la información de pacientes, personal y procesos clínicos.
-- **Seguridad y Permisos**: Controlar el acceso a la información según los roles de los usuarios.
-- **Eficiencia**: Mejorar la eficiencia en los procesos mediante la digitalización y centralización de datos.
+## Requisitos
 
-## Funcionalidades Principales
-- **Autenticación y Autorización**: Gestión de usuarios y control de acceso.
-- **Gestión de Pacientes**: Registro y consulta de información básica de los pacientes.
-- **Programación de Citas**: Manejo de citas médicas y recordatorios.
-- **Facturación y Seguros**: Gestión de facturas y detalles de seguros.
-- **Inventario Médico**: Registro y seguimiento de medicamentos y suministros.
-- **Historias Clínicas**: Almacenamiento y consulta de historiales médicos.
+## Intalación y Configuración
 
-## Estructura de la Base de Datos
-1. **Usuarios**: Información personal y roles.
-2. **Pacientes**: Datos demográficos y de contacto.
-3. **Citas**: Programación y estado de citas médicas.
-4. **Facturación**: Detalles de facturas y estado de pago.
-5. **Inventario de Medicamentos**: Gestión de existencias y costos.
-6. **Historias Clínicas**: Registro de diagnósticos y tratamientos.
+Backend (Django Rest Framework)
+1. Clonar el repositorio (git clone url repositorio)
+2. Abre una terminal y navega a la carpeta del proyecto
+3. Crea un entorno virtual: python -m venv entorno
+4. Activa el entorno: .\entorno\Scripts\activate
+5. Dirigete a la carpeta backend: cd .\backend\
+6. Instala las dependencias de Python: pip install -r requirements.txt
+7. Corre el servidor de desarrollo: python manage.py runserver
 
+Frontend (React.js)
+1. Abre otra terminal y navega a la carpeta del proyecto
+2. Dirígete a la carpeta del frontend: cd .\frontend\
+3. Dirígete a la carpeta de clinica: cd .\Clinica\
+4. Instala las dependencias de Node.js: npm install
+5. Ejecuta la aplicación: npm run dev
 
-
+ 
 ## Integrantes
 - **Paula Andrea Alvarez Ortiz**
 - **Yulexa Andrea Aragón Lemus**
-- **Ayde Yulima Posada**
+
 

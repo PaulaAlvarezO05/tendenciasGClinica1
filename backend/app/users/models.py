@@ -6,7 +6,6 @@ from ..medicalSpecialties.models import MedicalSpecialty
 class User(AbstractUser):
   nombres = models.CharField("Nombres", max_length=100)
   apellidos = models.CharField("Apellidos", max_length=100)
-  #email = models.CharField(max_length=100)
   telefono = models.CharField("Teléfono", max_length=10)
   fecha_nacimiento = models.DateField("Fecha de Nacimiento", null=True, blank=True)
   direccion = models.CharField("Dirección", max_length=250, null=True, blank=True)
@@ -23,11 +22,9 @@ class User(AbstractUser):
         verbose_name="Especialidad Médica", 
         on_delete=models.SET_NULL, 
         null=True, 
-        blank=True  # Especialidad puede estar vacía si no es médico
+        blank=True 
     )
-    # Opcional: si decides manejar un nombre de usuario único y una contraseña
-    # username = models.CharField(max_length=30, unique=True)  # Comentado ya que AbstractUser ya lo incluye
-    # password = models.CharField(max_length=128)  # AbstractUser ya maneja la contraseña
+   
 
   def __str__(self):
     return self.nombres

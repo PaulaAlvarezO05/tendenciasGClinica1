@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { addUser, getMedicalSpecialties, getRol } from '../api/Clinica.api'; // Asegúrate de que estas funciones estén bien implementadas
+import { addUser, getMedicalSpecialties, getRol } from '../api/Clinica.api'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export function AddUser() {
-    // Estados para manejar los datos del formulario
+    
     const [nombres, setNombres] = useState('');
     const [apellidos, setApellidos] = useState('');
     const [telefono, setTelefono] = useState('');
@@ -11,16 +11,16 @@ export function AddUser() {
     const [direccion, setDireccion] = useState('');
     const [rol, setRol] = useState('');
     const [especialidad, setEspecialidad] = useState('');
-    const [username, setUsername] = useState(''); // Campo para el nombre de usuario
-    const [email, setEmail] = useState(''); // Campo para el email
-    const [password, setPassword] = useState(''); // Campo para la contraseña
+    const [username, setUsername] = useState(''); 
+    const [email, setEmail] = useState(''); 
+    const [password, setPassword] = useState(''); 
 
-    // Estados para listas y mensajes de éxito
+  
     const [listEspecialidades, setListEspecialidades] = useState([]);
     const [listRoles, setListRoles] = useState([]);
     const [successMessage, setSuccessMessage] = useState('');
 
-    // Cargar especialidades médicas
+    
     useEffect(() => {
         const loadEspecialidades = async () => {
             try {
@@ -34,7 +34,7 @@ export function AddUser() {
         loadEspecialidades();
     }, []);
 
-    // Cargar roles
+    
     useEffect(() => {
         const loadRoles = async () => {
             try {
@@ -48,11 +48,11 @@ export function AddUser() {
         loadRoles();
     }, []);
 
-    // Manejo del envío del formulario
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Estructura del nuevo usuario
+       
         const newUser = {
             username,
             email,
@@ -68,7 +68,7 @@ export function AddUser() {
 
         try {
             await addUser(newUser);
-            // Limpiar los campos del formulario
+            
             setUsername('');
             setEmail('');
             setPassword('');
@@ -81,7 +81,7 @@ export function AddUser() {
             setEspecialidad('');
             setSuccessMessage('Usuario registrado exitosamente!');
 
-            // Ocultar el mensaje después de 3 segundos
+            
             setTimeout(() => setSuccessMessage(''), 3000);
         } catch (error) {
             console.error('Error al registrar usuario:', error);

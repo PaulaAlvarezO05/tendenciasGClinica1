@@ -9,12 +9,3 @@ class AppointmentViewset(viewsets.ModelViewSet):
     queryset = Appointment.objects.all()
     serializer_class = AppointmentSerializer
     
-    filter_backends = [
-        DjangoFilterBackend,
-        filters.SearchFilter,
-        filters.OrderingFilter,
-    ]
-    
-    filterset_fields = ('__all__')
-    search_fields = ('__all__')
-    ordering_fields = ('__all__')

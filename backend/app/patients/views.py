@@ -10,12 +10,4 @@ class PatientViewset(viewsets.ModelViewSet):
     serializer_class = PatientSerializer  
 
 
-    filter_backends = [
-        DjangoFilterBackend,
-        filters.SearchFilter,
-        filters.OrderingFilter,
-    ]
-    
-    filterset_fields = ('__all__')  # Mantiene todos los campos para el filtrado
-    search_fields = ('__all__')  # Mantiene todos los campos para la búsqueda
-    ordering_fields = ('__all__')  # Mantiene todos los campos para ordenar
+ 

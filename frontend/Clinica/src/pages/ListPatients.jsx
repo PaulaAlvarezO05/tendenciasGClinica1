@@ -15,20 +15,20 @@ export function ListPatients() {
         loadPatients();
     }, []);
 
-    // Función para exportar la tabla como PDF en modo horizontal (landscape)
+    
     const exportToPDF = () => {
-        // Crear el documento PDF en orientación landscape
+        
         const doc = new jsPDF('landscape');
 
-        // Agregar título
+        
         doc.setFontSize(18);
         doc.text('Listado de Pacientes', 14, 22);
 
-        // Definir el ancho de las columnas
+        
         const tableColumn = ["ID", "Nombre\nCompleto", "Teléfono", "Fecha\nNacimiento", "Dirección", "Género", "Email", "Nombre\nEmergencia", "Teléfono\nEmergencia", "Compañía\nSeguros", "Número\nPóliza", "Vigencia\nPóliza", "Estado\nPóliza"];
         const tableRows = [];
 
-        // Preparar los datos de la tabla
+        
         patients.forEach(patient => {
             const patientData = [
                 patient.id,
@@ -48,36 +48,36 @@ export function ListPatients() {
             tableRows.push(patientData);
         });
 
-        // Generar la tabla en el PDF
+        
         doc.autoTable({
             head: [tableColumn],
             body: tableRows,
             startY: 30,
-            headStyles: { fontSize: 7 },  // Tamaño de la fuente para los encabezados
-        bodyStyles: { fontSize: 7 },  // Tamaño de la fuente para el cuerpo de la tabla
+            headStyles: { fontSize: 7 },  
+        bodyStyles: { fontSize: 7 },  
         styles: {
-            cellPadding: 1,  // Reducir el relleno de las celdas
+            cellPadding: 1,  
         },
             columnStyles: {
-                0: { cellWidth: 10 },  // Ajusta el ancho de la columna ID
-                1: { cellWidth: 25 },  // Ajusta el ancho de la columna Nombre Completo
-                2: { cellWidth: 20 },  // Teléfono
-                3: { cellWidth: 22 },  // Fecha de Nacimiento
-                4: { cellWidth: 25 },  // Dirección
-                5: { cellWidth: 15 },  // Género
-                6: { cellWidth: 25 },  // Email
-                7: { cellWidth: 35 },  // Contacto de Emergencia
-                8: { cellWidth: 25 },  // Teléfono Emergencia
-                9: { cellWidth: 20 },  // Compañía de Seguros
-                10: { cellWidth: 20 }, // Número de Póliza
-                11: { cellWidth: 18 }, // Vigencia de Póliza
-                12: { cellWidth: 15}, // Estado de Póliza
+                0: { cellWidth: 10 },  
+                1: { cellWidth: 25 },  
+                2: { cellWidth: 20 },  
+                3: { cellWidth: 22 },  
+                4: { cellWidth: 25 },  
+                5: { cellWidth: 15 },  
+                6: { cellWidth: 25 }, 
+                7: { cellWidth: 35 },  
+                8: { cellWidth: 25 },  
+                9: { cellWidth: 20 },  
+                10: { cellWidth: 20 }, 
+                11: { cellWidth: 18 }, 
+                12: { cellWidth: 15}, 
             },
-            styles: { fontSize: 10, cellPadding: 3 },  // Ajusta el tamaño de fuente y padding
-            theme: 'striped'  // Opción de tema para mejorar visibilidad
+            styles: { fontSize: 10, cellPadding: 3 },  
+            theme: 'striped'  
         });
 
-        // Guardar el PDF
+      
         doc.save('Listado_de_Pacientes.pdf');
     };
 

@@ -9,12 +9,3 @@ class BillingViewset(viewsets.ModelViewSet):
     queryset = Billing.objects.all()
     serializer_class = BillingSerializer
     
-    filter_backends = [
-        DjangoFilterBackend,
-        filters.SearchFilter,
-        filters.OrderingFilter,
-    ]
-    
-    filterset_fields = ('__all__')
-    search_fields = ('__all__')
-    ordering_fields = ('__all__')

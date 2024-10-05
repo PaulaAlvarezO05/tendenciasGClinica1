@@ -15,7 +15,7 @@ export function UpdateUsers() {
         fecha_nacimiento: '',
         direccion: '',
         rol: '',
-        especialidad: '', // Permitir que este campo esté vacío
+        especialidad: '', 
     });
     const [updateMessage, setUpdateMessage] = useState('');
 
@@ -63,7 +63,7 @@ export function UpdateUsers() {
             fecha_nacimiento: user.fecha_nacimiento,
             direccion: user.direccion,
             rol: user.rol ? user.rol.id : '',
-            especialidad: user.especialidad ? user.especialidad.id : '', // Este campo puede estar vacío
+            especialidad: user.especialidad ? user.especialidad.id : '', 
         });
         setUpdateMessage('');
     };
@@ -98,7 +98,7 @@ export function UpdateUsers() {
                 fecha_nacimiento: '',
                 direccion: '',
                 rol: '',
-                especialidad: '', // Resetea a vacío
+                especialidad: '', 
             });
         } catch (error) {
             console.error('Error al actualizar el usuario:', error);
@@ -117,7 +117,7 @@ export function UpdateUsers() {
             fecha_nacimiento: '',
             direccion: '',
             rol: '',
-            especialidad: '', // Resetea a vacío
+            especialidad: '', 
         });
     };
 

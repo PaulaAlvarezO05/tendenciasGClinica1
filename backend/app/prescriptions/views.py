@@ -9,12 +9,3 @@ class PrescriptionViewset(viewsets.ModelViewSet):
     queryset = Prescription.objects.all()
     serializer_class = PrescriptionSerializer
     
-    filter_backends = [
-        DjangoFilterBackend,
-        filters.SearchFilter,
-        filters.OrderingFilter,
-    ]
-    
-    filterset_fields = ('__all__')
-    search_fields = ('__all__')
-    ordering_fields = ('__all__')

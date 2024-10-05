@@ -8,7 +8,7 @@ export function UpdatePatients() {
     const [formData, setFormData] = useState({
         nombre_completo: '',
         fecha_nacimiento: '',
-        genero: '', // Inicia vacío
+        genero: '', 
         direccion: '',
         telefono: '',
         email: '',
@@ -39,7 +39,7 @@ export function UpdatePatients() {
         setFormData({
             nombre_completo: patient.nombre_completo,
             fecha_nacimiento: patient.fecha_nacimiento,
-            genero: patient.genero, // Asignar el género actual
+            genero: patient.genero, 
             direccion: patient.direccion,
             telefono: patient.telefono,
             email: patient.email,
@@ -87,7 +87,7 @@ export function UpdatePatients() {
             setFormData({
                 nombre_completo: '',
                 fecha_nacimiento: '',
-                genero: '', // Reiniciar a vacío
+                genero: '', 
                 direccion: '',
                 telefono: '',
                 email: '',
