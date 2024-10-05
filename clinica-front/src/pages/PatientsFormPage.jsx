@@ -1,11 +1,13 @@
-import { useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { createPatient, deletePatient, updatePatient, getPatient, getAllPatients } from '../api/patients.api';
 import { useNavigate, useParams } from 'react-router-dom';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 export function PatientsFormPage() {
-    const { register, handleSubmit, formState: { errors }, setValue } = useForm();
+    const { register, handleSubmit, formState: { errors }, setValue, getValues } = useForm(); 
     const navigate = useNavigate();
     const params = useParams();
     console.log(params);
@@ -14,13 +16,27 @@ export function PatientsFormPage() {
     const [searchTerm, setSearchTerm] = useState('');
 
     async function loadPatients() {
-         const res = await getAllPatients();
-         setPatients(res.data);
-     }
+        const res = await getAllPatients(); 
+        setPatients(res.data);
+    }
 
     useEffect(() => {
-        loadPatients();
-    }, []);
+        const loadAppointment = async () => {
+            if (params.id) {
+                try {
+                    const res = await getAppointment(params.id);
+                    setValue("date_time", res.data.date_time);
+                    setValue("reason", res.data.reason);
+                    setValue("status", res.data.status);
+                    setValue("patient", res.data.patient);
+                    setValue("doctor", res.data.doctor);
+                } catch (error) {
+                    console.error("Error loading appointment:", error);
+                }
+            }
+        };
+        loadAppointment();
+    }, [params.id, setValue]);
 
     const filteredPatients = patients.filter(patient =>
         patient.full_name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -58,6 +74,40 @@ export function PatientsFormPage() {
         }
         loadPatient();
     }, [params.id, setValue]);
+
+    const exportToPDF = () => {
+        const doc = new jsPDF();
+        doc.setFontSize(12);
+
+        const title = "Información del Paciente";
+        doc.text(title, 14, 20);
+
+        const data = [
+            { Label: 'Nombre Completo', Value: getValues("full_name") },
+            { Label: 'Fecha de Nacimiento', Value: getValues("birth_date") },
+            { Label: 'Género', Value: getValues("gender") },
+            { Label: 'Dirección', Value: getValues("address") },
+            { Label: 'Número de Teléfono', Value: getValues("phone_number") },
+            { Label: 'Correo Electrónico', Value: getValues("email") },
+            { Label: 'Nombre del Contacto de Emergencia', Value: getValues("emergency_contact_name") },
+            { Label: 'Teléfono del Contacto de Emergencia', Value: getValues("emergency_contact_phone") },
+            { Label: 'Compañía de Seguro', Value: getValues("insurance_company") },
+            { Label: 'Número de Póliza', Value: getValues("policy_number") },
+            { Label: 'Estado de Póliza', Value: getValues("policy_status") },
+            { Label: 'Fecha de Expiración de la Póliza', Value: getValues("policy_expiry") },
+        ];
+
+        // Agregar tabla al PDF
+        doc.autoTable({
+            head: [['Label', 'Value']],
+            body: data.map(item => [item.Label, item.Value]),
+            startY: 30,
+            margin: { horizontal: 10 },
+        });
+
+        // Guardar PDF con nombre del paciente o 'nuevo_paciente'
+        doc.save(`${getValues("full_name") || 'nuevo_paciente'}.pdf`);
+    };
 
     return (
         <div>
@@ -178,8 +228,8 @@ export function PatientsFormPage() {
                     {...register("policy_status", { required: true })}
                 >
                     <option value="">Seleccione una opción</option>
-                    <option value="active">Activa</option>
-                    <option value="inactive">Inactiva</option>
+                    <option value="V">Vigente</option>
+                    <option value="C">Caducada</option>
                 </select>
                 {errors.policy_status && <span>Este campo es requerido!</span>}
                 <br /><br />
@@ -194,24 +244,15 @@ export function PatientsFormPage() {
                 {errors.policy_expiry && <span>Este campo es requerido!</span>}
                 <br /><br />
 
-                <input type="submit" value="Guardar" />
-
-                {params.id && (
-                    <button 
-                        type="button"
-                        onClick={async () => {
-                            const accepted = window.confirm('¿Estás seguro de eliminar el paciente?');
-                            if (accepted) {
-                                await deletePatient(params.id);
-                                alert('El paciente ha sido eliminado con éxito.');
-                                navigate('/patients');
-                            }
-                        }}
-                    >
-                        Borrar
-                    </button>
-                )}
+                <button type="submit" className="bg-purple-800 text-white p-2 rounded hover:bg-purple-700">
+                    Guardar
+                </button>
+                <button type="button" className="bg-purple-800 text-white p-2 rounded hover:bg-purple-700" onClick={exportToPDF}>
+                    Exportar a PDF
+                </button>
             </form>
+
+
         </div>
     );
 }
