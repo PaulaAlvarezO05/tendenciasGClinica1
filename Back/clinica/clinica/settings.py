@@ -103,11 +103,11 @@ WSGI_APPLICATION = 'clinica.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': "clinica",
-        'USER': "root",
-        'PASSWORD': "",
-        'HOST': "localhost",
-        'PORT': 3307,
+        'NAME': os.getenv("NAME"),
+        'USER': os.getenv("USER"),
+        'PASSWORD': os.getenv("PASSWORD"),       
+        'HOST': os.getenv("HOST"),
+        'PORT': os.getenv("PORT"),
     }
 }
 
