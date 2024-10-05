@@ -7,7 +7,7 @@ La aplicación está diseñada para manejar de manera eficiente los datos de pac
 
 ## Requisitos
 
-## Intalación y Configuración
+## Instalación y Configuración
 
 Backend (Django Rest Framework)
 1. Clonar el repositorio (git clone url repositorio)
