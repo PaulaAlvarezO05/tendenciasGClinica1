@@ -1,4 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
-background: #202020;
-color: white;
+background: hsl(0, 0%, 97%);
+color: rgb(160, 32, 136);
 }
