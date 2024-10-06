@@ -42,5 +42,4 @@ const Navigation = () => {
   );
 };
 
-// Asegúrate de exportar Navigation como default
 export default Navigation;

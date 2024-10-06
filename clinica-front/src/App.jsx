@@ -2,8 +2,8 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { PatientsPage } from './pages/PatientsPage';
 import { PatientsFormPage } from './pages/PatientsFormPage';
 import { AppointmentsListPage } from './pages/AppointmentsListPage';
-import AppointmentFormPage from './pages/AppointmentFormPage'; // Asegúrate de que la exportación sea correcta
-import Navigation from './components/Navigation'; // Asegúrate de que la exportación sea correcta
+import AppointmentFormPage from './pages/AppointmentFormPage'; 
+import Navigation from './components/Navigation'; 
 
 function App() {
   return (
