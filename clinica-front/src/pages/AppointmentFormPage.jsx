@@ -15,14 +15,15 @@ const AppointmentFormPage = () => {
 
     const onSubmit = async (data) => {
         try {
+            // Convertir `date_time` al formato ISO
             const payload = {
                 ...data,
-                date_time: new Date(data.date_time).toISOString(),
-                patient: parseInt(data.patient), 
-                doctor: parseInt(data.doctor)    
+                date_time: new Date(data.date_time).toISOString(), // Asegúrate de que `date_time` esté en el formato correcto
+                patient: parseInt(data.patient), // Asegúrate de enviar el id del paciente como número
+                doctor: parseInt(data.doctor)    // Asegúrate de enviar el id del doctor como número
             };
 
-            console.log("Payload enviado:", payload); 
+            console.log("Payload enviado:", payload); // Verifica que el payload esté bien antes de enviarlo
 
             if (params.id) {
                 await updateAppointment(params.id, payload);
@@ -74,7 +75,7 @@ const AppointmentFormPage = () => {
             try {
                 const doctorsList = await getAllDoctors();
                 console.log('Doctors loaded:', doctorsList);
-                setDoctors(doctorsList); 
+                setDoctors(doctorsList); // Aquí aseguramos que estamos asignando la lista correcta al estado
             } catch (error) {
                 console.error("Error loading doctors:", error);
             }
@@ -145,7 +146,7 @@ const AppointmentFormPage = () => {
                     {errors.doctor && <p className="error">{errors.doctor.message}</p>}
                 </div>
 
-                <input type="submit" value="Guardar" />
+                <input type="submit" value="Guardar" style={{ marginRight: '10px' }} />
             </form>
         </div>
     );

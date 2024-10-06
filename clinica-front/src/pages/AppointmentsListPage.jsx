@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { getAllAppointments, getPatientById, getDoctorById } from '../api/appointmentslist.api.js';
 import { useNavigate } from 'react-router-dom';
 import { deleteAppointment } from '../api/appointments.api';
-import jsPDF from 'jspdf'; 
-import 'jspdf-autotable';
+import jsPDF from 'jspdf'; // Importa jsPDF
+import 'jspdf-autotable'; // Importa autotable
 import './AppointmentsListPage.css';
 
 export function AppointmentsListPage() {
@@ -48,12 +48,15 @@ export function AppointmentsListPage() {
     navigate(`/appointments/edit/${id}`);
   };
 
+  // Función para exportar citas a PDF
   const exportToPDF = () => {
     const doc = new jsPDF();
 
+    // Título del PDF
     doc.setFontSize(18);
     doc.text("Lista de Citas", 14, 22);
 
+    // Añadir tabla con autotable
     doc.autoTable({
       startY: 30,
       head: [['Fecha y Hora', 'Motivo', 'Estado', 'Paciente', 'Doctor']],
@@ -66,6 +69,7 @@ export function AppointmentsListPage() {
       ]),
     });
 
+    // Guardar PDF
     doc.save("citas.pdf");
   };
 
@@ -95,7 +99,7 @@ export function AppointmentsListPage() {
               <td>{appointment.patient.full_name}</td>
               <td>{appointment.doctor.full_name}</td>
               <td>
-                <div style={{ display: 'flex', gap: '10px' }}> {/* Espaciado */}
+                <div style={{ display: 'flex', gap: '10px' }}> {/* Usando Flexbox para el espaciado */}
                   <button 
                     className="bg-purple-800 text-white p-2 rounded hover:bg-purple-700" 
                     onClick={() => handleEdit(appointment.id)}

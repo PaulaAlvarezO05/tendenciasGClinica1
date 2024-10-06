@@ -1,3 +1,4 @@
+// patients.js
 import axios from 'axios';
 
 const patientsApi = axios.create({
