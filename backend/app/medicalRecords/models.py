@@ -14,13 +14,13 @@ class MedicalRecord(models.Model):
         User,
         verbose_name="Médico", 
         on_delete=models.CASCADE,
-        limit_choices_to={'rol__nombre': 'Médico'}, #Filtro para que solo los usuarios con el rol de "Médico" puedan ser seleccionados
+        limit_choices_to={'rol__nombre': 'Médico'},
         null=True, 
         blank=True
     )
     fecha_registro = models.DateTimeField("Fecha de Registro")
+    motivo_consulta = models.TextField("Motivo de consulta")
     descripcion_diagnostico = models.TextField("Descripción del diagnóstico")
-    #incluir llave foranea descripcion_tratamiento = models.TextField("Descripción del tratamiento")
 
     def __str__(self):
-        return f"Historia clínica de {self.paciente.nombres}"
+        return f"Historia clínica de {self.paciente.nombre_completo}"

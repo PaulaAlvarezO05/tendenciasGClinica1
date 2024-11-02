@@ -1,7 +1,9 @@
 from django.db import models
 from ..patients.models import Patient
 from ..users.models import User
+from ..billing.models import Billing
 from ..consultationType.models import ConsultationType
+
 
 class Appointment(models.Model):
   paciente = models.ForeignKey(
@@ -15,7 +17,7 @@ class Appointment(models.Model):
      User,
      verbose_name="Médico", 
      on_delete=models.CASCADE,
-     limit_choices_to={'rol__nombre': 'Médico'}, #Filtro para que solo los usuarios con el rol de "Médico" puedan ser seleccionados
+     limit_choices_to={'rol__nombre': 'Médico'},
      null=True, 
      blank=True
   ) 
@@ -27,6 +29,14 @@ class Appointment(models.Model):
      null=True
   )
   estado = models.CharField(max_length=20, default='Programada')
+  estado_pago = models.CharField(max_length=20, default='Pendiente')
+  
+  billing = models.OneToOneField(
+     Billing, 
+     on_delete=models.SET_NULL, 
+     null=True, 
+     blank=True)
 
   def __str__(self):
     return f"Médico: {self.medico.nombres} {self.medico.apellidos} Fecha: {self.fecha_hora}"
+ 

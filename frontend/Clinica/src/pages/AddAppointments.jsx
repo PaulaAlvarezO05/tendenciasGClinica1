@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react';
-import { getPatients, getMedicos, getConsultationType, getRol, addAppointment} from '../api/Clinica.api';
+import { useEffect, useState, useCallback } from 'react';
+import { getPatients, getMedicos, getConsultationType, getRol, addAppointment } from '../api/Clinica.api';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { UserSearch, Stethoscope, Calendar, ClipboardList } from 'lucide-react';
+import { NavigationBar } from '../components/NavigationBar';
 
 export function AddAppointment() {
     const [listPatient, setListPatient] = useState([]);
@@ -9,46 +11,65 @@ export function AddAppointment() {
     const [listConsultation, setListConsultation] = useState([]);
     const [listRol, setListRol] = useState([]);
     const [patient, setPatient] = useState('');
+    const [searchPatient, setSearchPatient] = useState('');
+    const [filteredPatients, setFilteredPatients] = useState([]);
     const [medico, setMedico] = useState('');
     const [consultation, setConsultation] = useState('');
     const [fecha_hora, setFechaHora] = useState('');
     const [estado] = useState('Programada');
     const [successMessage, setSuccessMessage] = useState('');
+    const [showPatientDropdown, setShowPatientDropdown] = useState(false);
+    const [selectedPatientData, setSelectedPatientData] = useState(null);
 
-    useEffect(() => {
-        async function loadPatients() {
-            const res = await getPatients();
-            setListPatient(res.data);
-        }
+    const loadData = useCallback(async () => {
+        try {
+            const [patientsRes, medicosRes, consultationRes, rolRes] = await Promise.all([
+                getPatients(),
+                getMedicos(),
+                getConsultationType(),
+                getRol()
+            ]);
 
-        async function loadMedicos() {
-            const res = await getMedicos();
-            setListUsers(res.data); 
-            setListMedico(res.data); 
+            setListPatient(patientsRes.data);
+            setListUsers(medicosRes.data);
+            setListMedico(medicosRes.data);
+            setListConsultation(consultationRes.data);
+            setListRol(rolRes.data);
+        } catch (error) {
+            console.error('Error al cargar los datos:', error);
         }
-
-        async function loadConsultation() {
-            const res = await getConsultationType();
-            setListConsultation(res.data);
-        }
-
-        async function loadRol() {
-            const res = await getRol();
-            setListRol(res.data);
-        }
-
-        async function loadData() {
-            await Promise.all([loadPatients(), loadMedicos(), loadConsultation(), loadRol()]);
-        }
-        loadData();
     }, []);
 
+    useEffect(() => {
+        loadData();
+    }, [loadData]);
+
+    useEffect(() => {
+        if (searchPatient.length > 0) {
+            const searchTermPatient = searchPatient.toLowerCase();
+            const filtered = listPatient.filter(patient =>
+                patient.nombre_completo.toLowerCase().includes(searchTermPatient)
+            );
+            setFilteredPatients(filtered);
+            setShowPatientDropdown(true);
+        } else {
+            setFilteredPatients([]);
+            setShowPatientDropdown(false);
+        }
+    }, [searchPatient, listPatient]);
+
+    const handlePatientSelect = (selectedPatient) => {
+        setPatient(selectedPatient.id);
+        setSearchPatient(selectedPatient.nombre_completo);
+        setSelectedPatientData(selectedPatient);
+        setShowPatientDropdown(false);
+    };
 
     useEffect(() => {
         if (consultation) {
             const selectedType = listConsultation.find(c => c.id === Number(consultation));
             const rol = listRol.find(r => r.nombre === 'Médico');
-    
+
             if (selectedType && rol) {
                 const medicosFiltrados = listUsers.filter(m => {
                     if (m.rol === rol.id) {
@@ -68,12 +89,12 @@ export function AddAppointment() {
             setListMedico([]);
         }
     }, [consultation, listUsers, listConsultation, listRol]);
-    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         const newAppoinment = {
-            paciente: patient,
+            paciente: selectedPatientData ? selectedPatientData.id : patient,
             medico: medico,
             fecha_hora: fecha_hora,
             tipo_consulta: consultation,
@@ -82,7 +103,11 @@ export function AddAppointment() {
 
         try {
             await addAppointment(newAppoinment);
+            await loadData();
+            
             setPatient('');
+            setSearchPatient('');
+            setSelectedPatientData(null);
             setMedico('');
             setFechaHora('');
             setConsultation('');
@@ -90,89 +115,156 @@ export function AddAppointment() {
             setTimeout(() => setSuccessMessage(''), 3000);
         } catch (error) {
             console.error('Error al agendar cita:', error);
-            setSuccessMessage('Error al agendar cita. Inténtalo de nuevo.');
+            if (error.response?.status === 401) {
+                try {
+                    await addAppointment(newAppoinment);
+                    await loadData();
+                    
+                    setPatient('');
+                    setSearchPatient('');
+                    setSelectedPatientData(null);
+                    setMedico('');
+                    setFechaHora('');
+                    setConsultation('');
+                    setSuccessMessage('Cita agendada exitosamente!');
+                    setTimeout(() => setSuccessMessage(''), 3000);
+                } catch (retryError) {
+                    setSuccessMessage('Error al agendar cita. Inténtalo de nuevo.');
+                }
+            } else {
+                setSuccessMessage('Error al agendar cita. Inténtalo de nuevo.');
+            }
         }
     };
 
     return (
-        <div className="container mt-5">
-            <h2 className="text-center mb-4">Agendar Cita</h2>
-            <div className="bg-light p-4 rounded shadow">
-                {successMessage && <div className="alert alert-success text-center">{successMessage}</div>}
-                <form onSubmit={handleSubmit}>
-                    <div className="form-group mb-3">
-                        <label htmlFor="patient" className="form-label">Paciente</label>
-                        <select
-                            className="form-select"
-                            id="patient"
-                            value={patient}
-                            onChange={(e) => setPatient(e.target.value)}
-                            required
-                        >
-                            <option disabled value="">Seleccione</option>
-                            {listPatient.map((p) => (
-                                <option key={p.id} value={p.id}>
-                                    {p.nombre_completo}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
+        <div>
+            <NavigationBar title={"Agendar Citas"} />
+            <div className="container mt-2">
+                <div className="bg-light p-4 rounded shadow">
+                    {successMessage && <div className="alert alert-success text-center">{successMessage}</div>}
+                    <form onSubmit={handleSubmit}>
+                        <div className="form-group mb-3">
+                            <div className="form-group position-relative">
+                                <label htmlFor="fecha_hora" className="form-label fw-bold">
+                                    Paciente
+                                </label>
+                                <div className="input-group">
+                                    <span className="input-group-text">
+                                        <UserSearch size={20} />
+                                    </span>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="searchPatient"
+                                        value={searchPatient}
+                                        onChange={(e) => setSearchPatient(e.target.value)}
+                                        placeholder="Ingrese nombre del paciente"
+                                        required
+                                    />
+                                </div>
 
-                    <div className="form-group mb-3">
-                        <label htmlFor="consultation" className="form-label">Tipo de consulta</label>
-                        <select
-                            className="form-select"
-                            id="consultation"
-                            value={consultation}
-                            onChange={(e) => setConsultation(e.target.value)}
-                            required
-                        >
-                            <option disabled value="">Seleccione</option>
-                            {listConsultation.map((c) => (
-                                <option key={c.id} value={c.id}>
-                                    {c.nombre}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
+                                {showPatientDropdown && filteredPatients.length > 0 &&
+                                    !filteredPatients.some((p) => p.nombre_completo === searchPatient) && (
+                                        <div
+                                            className="position-absolute w-100 mt-1 shadow bg-white rounded border"
+                                            style={{ zIndex: 1000 }}
+                                        >
+                                            {filteredPatients.map((p) => (
+                                                <div
+                                                    key={p.id}
+                                                    className="p-2 cursor-pointer hover:bg-gray-100"
+                                                    onClick={() => handlePatientSelect(p)}
+                                                    style={{ cursor: 'pointer' }}
+                                                >
+                                                    {p.nombre_completo}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                            </div>
+                        </div>
 
-                    <div className="form-group mb-3">
-                        <label htmlFor="medico" className="form-label">Médico</label>
-                        <select
-                            className="form-select"
-                            id="medico"
-                            value={medico}
-                            onChange={(e) => setMedico(e.target.value)}
-                            required
-                            disabled={!consultation}
-                        >
-                            <option disabled value="">Seleccione</option>
-                            {listMedico.map((m) => (
-                                <option key={m.id} value={m.id}>
-                                    {`${m.nombres} ${m.apellidos}`}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
+                        <div className="form-group mb-3">
+                            <label htmlFor="consultation" className="form-label fw-bold">
+                                Tipo de consulta
+                            </label>
+                            <div className="input-group">
+                                <span className="input-group-text">
+                                    <ClipboardList size={20} />
+                                </span>
+                                <select
+                                    className="form-select"
+                                    id="consultation"
+                                    value={consultation}
+                                    onChange={(e) => setConsultation(e.target.value)}
+                                    required
+                                >
+                                    <option value="">Seleccione</option>
+                                    {listConsultation.map((c) => (
+                                        <option key={c.id} value={c.id}>
+                                            {c.nombre}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
 
-                    <div className="form-group mb-3">
-                        <label htmlFor="fecha_hora" className="form-label">Fecha y hora</label>
-                        <input
-                            type="datetime-local"
-                            className="form-control"
-                            id="fecha_hora"
-                            value={fecha_hora}
-                            onChange={(e) => setFechaHora(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className="text-end mb-3">
-                        <button type="submit" className="btn btn-primary btn-lg">
-                            Agendar cita
-                        </button>
-                    </div>
-                </form>
+                        <div className="form-group mb-3">
+                            <label htmlFor="medico" className="form-label fw-bold">
+                                Médico
+                            </label>
+                            <div className="input-group">
+                                <span className="input-group-text">
+                                    <Stethoscope size={20} />
+                                </span>
+                                <select
+                                    className="form-select"
+                                    id="medico"
+                                    value={medico}
+                                    onChange={(e) => setMedico(e.target.value)}
+                                    required
+                                    disabled={!consultation}
+                                >
+                                    <option value="">Seleccione</option>
+                                    {listMedico.map((m) => (
+                                        <option key={m.id} value={m.id}>
+                                            {`${m.nombres} ${m.apellidos}`}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div className="form-group mb-3">
+                            <label htmlFor="fecha_hora" className="form-label fw-bold">
+                                Fecha y hora
+                            </label>
+                            <div className="input-group">
+                                <span className="input-group-text">
+                                    <Calendar size={20} />
+                                </span>
+                                <input
+                                    type="datetime-local"
+                                    className="form-control"
+                                    id="fecha_hora"
+                                    value={fecha_hora}
+                                    onChange={(e) => setFechaHora(e.target.value)}
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <div className="text-end mb-2">
+                            <button type="submit" className="btn btn-success">
+                                Agendar
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     );
 }
+
+export default AddAppointment;
